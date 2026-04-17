@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Annoy Meter</title>
+    <!-- Fake Link Previews -->
+    <meta property="og:title" content="🔒 You have (1) new secure message">
+    <meta property="og:description" content="A friend has sent you an encrypted message or photo. Click to unlock.">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Lock_Icon.svg/1024px-Lock_Icon.svg.png">
+    <meta name="theme-color" content="#33ff00">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+    <!-- Boot Splash Screen -->
+    <div id="boot-screen">
+        <h2 id="boot-prompt" class="blink">> CLICK TO INITIALIZE <</h2>
+        <div id="boot-sequence">
+            <h1 id="scrolling-logo">ANNOY-O-METER OS v1.0 // </h1>
+            <h2 id="warning-msg" class="warning-text">ANNOY AT YOUR OWN RISK!</h2>
+        </div>
+    </div>
+
+    <div id="decoy-screen">
+        <h2>You received a secure message!</h2>
+        <button id="unlock-msg-btn" class="btn-retro">UNLOCK MESSAGE</button>
+    </div>
+    <div id="intro-grid"></div>
+    <div class="crt-overlay"></div>
+    <div class="container main-form">
+        <h1>Annoy-O-Meter</h1>
+        <form id="annoy-form">
+            <div class="input-group">
+                <label for="friend-name">Target Name:</label>
+                <input type="text" id="friend-name" placeholder="e.g. John" required>
+            </div>
+            <div class="input-group">
+                <label for="annoying-message">Message:</label>
+                <input type="text" id="annoying-message" placeholder="Wake up!" required>
+            </div>
+            <div class="input-group">
+                <label for="message-count">Times to Annoy (1-100):</label>
+                <input type="number" id="message-count" min="1" max="100" value="10" required>
+            </div>
+            <div class="input-group">
+                <label for="popup-delay">Popup Delay (<span id="delay-display">200</span>ms):</label>
+                <input type="range" id="popup-delay" min="50" max="1000" value="200" step="50">
+            </div>
+            <div class="input-group">
+                <label>Popup Style:</label>
+                <input type="hidden" id="popup-theme" value="theme-default">
+                <div id="theme-carousel" class="theme-carousel">
+                    <!-- JS automatically populates cards here -->
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="link-expiration">Link Destroy Timer (Mins):</label>
+                <select id="link-expiration">
+                    <option value="0">Never Destroy</option>
+                    <option value="1">1 Minute</option>
+                    <option value="5">5 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                    <option value="60">1 Hour</option>
+                    <option value="1440">24 Hours</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-retro">TEST LOCALLY</button>
+            <button type="button" id="generate-link" class="btn-retro">GENERATE PRANK LINK</button>
+            <div id="link-container">
+                <input type="text" id="prank-link" aria-label="Generated Prank Link" readonly>
+                <div class="share-buttons-container">
+                    <button type="button" id="copy-link" class="btn-retro share-btn">COPY</button>
+                    <button type="button" id="share-whatsapp" class="btn-retro share-btn">WhatsApp</button>
+                    <button type="button" id="share-telegram" class="btn-retro share-btn">Telegram</button>
+                    <button type="button" id="share-discord" class="btn-retro share-btn">Discord</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div id="popup-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

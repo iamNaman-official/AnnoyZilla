@@ -1,0 +1,557 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000;
+    color: #33ff00;
+    font-family: 'Press Start 2P', monospace;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 2px 2px 0px #005500;
+    margin: 0;
+    background-image: radial-gradient(circle at 50% 50%, #002200 0%, #000000 80%);
+}
+
+/* Retro animated zooming/rotating 2D grid covering entire screen */
+body::before {
+    content: '';
+    position: absolute;
+    width: 200vw;
+    height: 200vh;
+    left: -50vw;
+    top: -50vh;
+    background: 
+        linear-gradient(rgba(51, 255, 0, 0.1) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(51, 255, 0, 0.1) 2px, transparent 2px);
+    background-size: 80px 80px;
+    z-index: -1;
+    transform-origin: center center;
+    animation: dynamicGrid 15s ease-in-out infinite alternate;
+}
+
+@keyframes dynamicGrid {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+    50% { transform: scale(1.5) rotate(5deg); opacity: 0.8; }
+    100% { transform: scale(1) rotate(-5deg); opacity: 0.3; }
+}
+
+.blink {
+    animation: blinkText 1s step-end infinite;
+}
+
+@keyframes blinkText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.warning-text {
+    animation: glitch 0.3s infinite alternate;
+    text-shadow: 2px 0 red, -2px 0 blue;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+/* CRT monitor scanline effect */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        transparent 50%,
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.main-form {
+    background-color: #222;
+    border: 4px solid #33ff00;
+    padding: 30px;
+    box-shadow: 10px 10px 0px #114400;
+    z-index: 10;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+/* Retro Scrollbar for the form */
+.main-form::-webkit-scrollbar {
+    width: 8px;
+}
+.main-form::-webkit-scrollbar-thumb {
+    background: #33ff00;
+    border-radius: 4px;
+}
+.main-form::-webkit-scrollbar-track {
+    background: #000;
+}
+
+h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+}
+
+input {
+    background: #000;
+    color: #33ff00;
+    border: 2px solid #33ff00;
+    padding: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    outline: none;
+}
+
+input:focus {
+    background: #111;
+}
+
+.btn-retro {
+    background: #33ff00;
+    color: #000;
+    border: 4px solid #fff;
+    padding: 15px;
+    width: 100%;
+    font-family: 'Press Start 2P', monospace;
+    cursor: pointer;
+    font-size: 1rem;
+    text-shadow: none;
+    transition: all 0.1s;
+    margin-top: 20px;
+}
+
+.btn-retro:hover {
+    background: #fff;
+    border-color: #33ff00;
+    color: #33ff00;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.btn-retro:active {
+    transform: scale(0.95);
+}
+
+/* Annoying Popups Layout */
+#popup-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none; /* Let clicks pass to popups but container itself is invisible */
+    z-index: 1000;
+}
+
+.annoying-popup {
+    position: absolute;
+    background-color: #0000aa;
+    border: 6px solid #fff;
+    padding: 20px;
+    min-width: 250px;
+    box-shadow: 15px 15px 0px #000;
+    color: #fff;
+    text-shadow: none;
+    pointer-events: auto; /* Let clicks interact */
+    animation: popupSpawn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.annoying-popup .header {
+    background: #fff;
+    color: #0000aa;
+    padding: 5px;
+    margin: -15px -15px 15px -15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.annoying-popup .message {
+    font-size: 1rem;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: #fff;
+    border: 2px solid #000;
+    color: #000;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background: #ff0000;
+    color: #fff;
+}
+
+@keyframes popupSpawn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}@media (max-width: 600px) {
+    .main-form { width: 95%; max-width: none; padding: 20px; box-shadow: 5px 5px 0px #114400; border-width: 3px; }
+    h1 { font-size: 1.2rem; margin-bottom: 20px; }
+    .btn-retro { padding: 12px; font-size: 0.9rem; margin-top: 15px; }
+    input { font-size: 0.8rem; padding: 10px; }
+    .annoying-popup { min-width: 200px; padding: 15px; box-shadow: 10px 10px 0px #000; border-width: 4px; }
+    .annoying-popup .message { font-size: 0.9rem; }
+    #link-container > div { flex-direction: column; gap: 10px; }
+    #link-container button { width: 100%; border-width: 4px !important; }
+}
+
+/* Anime js intro grid */
+#intro-grid {
+    overflow: hidden;
+}
+.tile {
+    /* Set dynamic width/height via JS, or keep proportional */
+    background-color: #33ff00;
+    border: 1px solid #114400; /* Subtle borders to show the grid */
+    box-sizing: border-box;
+}
+
+#intro-grid {
+    display: none;
+    z-index: 99998; 
+    background: transparent;
+}
+.tile {
+    width: 50px;
+    height: 50px;
+}
+
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#boot-prompt {
+    color: #33ff00;
+    text-align: center;
+}
+
+#boot-sequence {
+    display: none;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+#scrolling-logo {
+    color: #33ff00;
+    white-space: nowrap;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+#warning-msg {
+    color: red;
+    display: none;
+}
+
+#decoy-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 99999;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#decoy-screen h2 {
+    color: #33ff00;
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+#unlock-msg-btn {
+    width: auto;
+    padding: 20px;
+    font-size: 1.2rem;
+}
+
+#intro-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    flex-wrap: wrap;
+    z-index: 99998;
+    cursor: pointer;
+}
+
+.main-form {
+    display: none;
+}
+
+#popup-delay {
+    cursor: pointer;
+}
+
+#generate-link {
+    background: #ff00ff;
+    border-color: #fff;
+    color: #fff;
+}
+
+#link-container {
+    display: none;
+    margin-top: 20px;
+}
+
+#prank-link {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.share-buttons-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#copy-link {
+    padding: 10px;
+    flex: 1 1 45%;
+}
+
+#share-whatsapp {
+    padding: 10px;
+    flex: 1 1 45%;
+    background: #25D366;
+    color: #fff;
+    border-color: #fff;
+}
+
+#share-telegram {
+    padding: 10px;
+    flex: 1 1 45%;
+    background: #0088cc;
+    color: #fff;
+    border-color: #fff;
+}
+
+#share-discord {
+    padding: 10px;
+    flex: 1 1 45%;
+    background: #5865F2;
+    color: #fff;
+    border-color: #fff;
+}
+
+.retro-figure { position: fixed; width: 48px; height: 48px; z-index: 9500; pointer-events: none; background-size: contain; background-repeat: no-repeat; opacity: 0.8; }
+/* ==== 25 POPUP THEMES ==== */
+/* Base styling used if nothing overrides for theme-default */
+
+.annoying-popup.theme-anime { background-color: #ffcccc; border-color: #ff6699; color: #cc0066; font-family: 'Comic Sans MS', sans-serif; box-shadow: 10px 10px 0px #ff6699; }
+.annoying-popup.theme-anime .header { background-color: #ff6699; color: #fff; }
+
+.annoying-popup.theme-scifi { background-color: #0b0c10; border-color: #66fcf1; color: #45a29e; font-family: 'Courier New', Courier, monospace; box-shadow: 0 0 15px #66fcf1; }
+.annoying-popup.theme-scifi .header { background-color: #66fcf1; color: #0b0c10; }
+
+.annoying-popup.theme-cartoon { background-color: #fceabb; border-color: #f37736; color: #333; font-family: 'Arial Black', sans-serif; border-radius: 20px; box-shadow: 10px 10px 0px #f37736; }
+.annoying-popup.theme-cartoon .header { background-color: #f37736; color: #fff; border-radius: 12px 12px 0 0; }
+
+.annoying-popup.theme-hacker { background-color: #000; border-color: #0f0; color: #0f0; font-family: 'Courier New', Courier; box-shadow: none; border-style: dashed; }
+.annoying-popup.theme-hacker .header { background-color: #0f0; color: #000; }
+
+.annoying-popup.theme-vaporwave { background-color: #ff71ce; border-color: #01cdfe; color: #05ffa1; font-family: 'Brush Script MT', cursive; box-shadow: 8px 8px 0px #b967ff; text-shadow: 2px 2px #b967ff; }
+.annoying-popup.theme-vaporwave .header { background-color: #01cdfe; color: #fff; }
+
+.annoying-popup.theme-cyberpunk { background-color: #fcee0a; border-color: #00ff00; color: #222; font-family: 'Impact', sans-serif; box-shadow: -10px 10px 0px #ff003c; border-width: 8px; }
+.annoying-popup.theme-cyberpunk .header { background-color: #00ff00; color: #000; }
+
+.annoying-popup.theme-fantasy { background-color: #3b2f2f; border-color: #c0c0c0; color: #d4af37; font-family: 'Times New Roman', serif; border-style: double; border-width: 6px; box-shadow: 0 0 20px #8b0000; }
+.annoying-popup.theme-fantasy .header { background-color: #c0c0c0; color: #000; }
+
+.annoying-popup.theme-minimalist { background-color: #fff; border-color: #000; color: #000; font-family: sans-serif; box-shadow: none; border-width: 1px; }
+.annoying-popup.theme-minimalist .header { background-color: #eee; color: #000; }
+
+.annoying-popup.theme-gothic { background-color: #1a1a1a; border-color: #800000; color: #ccc; font-family: 'Georgia', serif; box-shadow: 5px 5px 15px #000; }
+.annoying-popup.theme-gothic .header { background-color: #800000; color: #fff; }
+
+.annoying-popup.theme-steampunk { background-color: #8b5a2b; border-color: #cd853f; color: #eee; font-family: 'Palatino Linotype', serif; box-shadow: inset 0 0 10px #000; border-width: 10px; border-style: ridge; }
+.annoying-popup.theme-steampunk .header { background-color: #cd853f; color: #000; }
+
+.annoying-popup.theme-noir { background-color: #222; border-color: #777; color: #ddd; font-family: 'Trebuchet MS', sans-serif; box-shadow: -10px -10px 0 #555; }
+.annoying-popup.theme-noir .header { background-color: #777; color: #000; }
+
+.annoying-popup.theme-neon { background-color: #000; border-color: #ff00ff; color: #00ffff; font-family: 'Press Start 2P', monospace; box-shadow: 0 0 10px #ff00ff, inset 0 0 10px #00ffff; }
+.annoying-popup.theme-neon .header { background-color: #ff00ff; color: #fff; }
+
+.annoying-popup.theme-pastel { background-color: #fdfd96; border-color: #ffb7b2; color: #84b6f4; font-family: 'Verdana', sans-serif; box-shadow: 10px 10px 10px #fdcae1; border-radius: 50%; padding: 40px; }
+.annoying-popup.theme-pastel .header { background-color: transparent; color: #84b6f4; }
+.annoying-popup.theme-pastel .close-btn { position: absolute; right: 10px; top: 10px; border-radius: 50%; }
+
+.annoying-popup.theme-grunge { background-color: #4a4a4a; border-color: #2b2b2b; color: #a9a9a9; font-family: 'Courier Standard', monospace; box-shadow: 5px 5px 0 #000; border-width: 4px; border-style: dotted; }
+.annoying-popup.theme-grunge .header { background-color: #2b2b2b; color: #a9a9a9; }
+
+.annoying-popup.theme-retrowave { background-color: #2a003f; border-color: #ff007f; color: #f9c80e; font-family: 'Tahoma', sans-serif; box-shadow: 0 0 20px #00ffff; text-transform: uppercase; }
+.annoying-popup.theme-retrowave .header { background-color: #ff007f; color: #fff; }
+
+.annoying-popup.theme-8bit { background-color: #0000aa; border-color: #fff; color: #fff; font-family: 'Press Start 2P', monospace; box-shadow: 15px 15px 0px #000; border-width: 6px; }
+.annoying-popup.theme-8bit .header { background-color: #fff; color: #0000aa; }
+
+.annoying-popup.theme-matrix { background-color: #000; border-color: #00ff41; color: #00ff41; font-family: Courier, monospace; box-shadow: inset 0 0 20px #00ff41; border-width: 2px; }
+.annoying-popup.theme-matrix .header { background-color: #00ff41; color: #000; }
+
+.annoying-popup.theme-glitch { background-color: #111; border-color: red; color: #fff; font-family: monospace; box-shadow: 5px 0 0 blue; text-shadow: -2px 0 red, 2px 0 blue; }
+.annoying-popup.theme-glitch .header { background-color: red; color: #fff; }
+
+.annoying-popup.theme-comic { background-color: #fff; border-color: #000; color: #000; font-family: 'Comic Sans MS', cursive; box-shadow: 8px 8px 0 #000; border-width: 4px; }
+.annoying-popup.theme-comic .header { background-color: #ffeb3b; color: #000; border-bottom: 4px solid #000; }
+
+.annoying-popup.theme-popart { background-color: #e50000; border-color: #000; color: #fff; font-family: 'Arial Black', sans-serif; box-shadow: 12px 12px 0 #ffeb3b; border-width: 5px; }
+.annoying-popup.theme-popart .header { background-color: #0026e6; color: #fff; border-bottom: 5px solid #000; }
+
+.annoying-popup.theme-royal { background-color: #4b0082; border-color: #ffd700; color: #ffd700; font-family: 'Georgia', serif; box-shadow: 0 0 15px #ffd700; border-style: inset; border-width: 8px; }
+.annoying-popup.theme-royal .header { background-color: #ffd700; color: #4b0082; }
+
+.annoying-popup.theme-undersea { background-color: #006994; border-color: #20b2aa; color: #e0ffff; font-family: var(--font-primary, sans-serif); box-shadow: 0 20px 30px #000080; border-radius: 10px; }
+.annoying-popup.theme-undersea .header { background-color: #20b2aa; color: #004d4d; }
+
+.annoying-popup.theme-space { background-color: #000; border-color: #fff; color: silver; font-family: 'Lucida Console', monospace; border-radius: 50%; box-shadow: 0 0 40px #fff; text-align: center; }
+.annoying-popup.theme-space .header { display: none; }
+
+.annoying-popup.theme-inferno { background-color: #8b0000; border-color: #ff4500; color: #ffa07a; font-family: 'Impact', sans-serif; box-shadow: 0 0 30px #ff0000; border-width: 3px; }
+.annoying-popup.theme-inferno .header { background-color: #ff4500; color: #000; }
+
+.annoying-popup.theme-candy { background-color: #ff69b4; border-color: #fff; color: #fff; font-family: 'Comic Sans MS', cursive; border-radius: 30px; box-shadow: 5px 5px 15px #c71585; border-width: 5px; border-style: dashed; }
+.annoying-popup.theme-candy .header { background-color: #fff; color: #ff69b4; border-radius: 20px 20px 0 0; }
+
+/* ==== CAROUSEL ==== */
+.theme-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 10px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #33ff00 #000;
+}
+.theme-carousel::-webkit-scrollbar { height: 8px; }
+.theme-carousel::-webkit-scrollbar-thumb { background: #33ff00; border-radius: 4px; }
+.theme-carousel::-webkit-scrollbar-track { background: #000; }
+
+.theme-card {
+    background: #111;
+    border: 2px solid #33ff00;
+    color: #33ff00;
+    padding: 10px 15px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 0.7rem;
+    transition: background 0.2s, transform 0.1s;
+    -webkit-user-select: none;
+    user-select: none;
+    border-radius: 4px;
+}
+.theme-card:hover { background: #222; }
+.theme-card.selected { background: #33ff00; color: #000; font-weight: bold; transform: scale(1.05); }
+
+/* ==== UPDATED ANIMATIONS/STYLES ==== */
+@keyframes animeFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.annoying-popup.theme-anime {
+    background: linear-gradient(135deg, #ffcccc, #ffe6f0) !important;
+    border: 4px solid #ff6699 !important;
+    border-radius: 20px !important;
+    color: #cc0066 !important;
+    font-family: 'Comic Sans MS', cursive, sans-serif !important;
+    box-shadow: 0px 10px 20px rgba(255, 102, 153, 0.5) !important;
+    animation: popupSpawn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), animeFloat 3s ease-in-out infinite !important;
+}
+.annoying-popup.theme-anime .header {
+    background: #ff6699 !important; color: #fff !important; border-radius: 14px 14px 0 0 !important; border:none !important;
+}
+
+.annoying-popup.theme-8bit {
+    background-color: #0000aa !important;
+    border: 6px solid #ccc !important;
+    border-top-color: #fff !important;
+    border-left-color: #fff !important;
+    border-bottom-color: #555 !important;
+    border-right-color: #555 !important;
+    color: #fff !important;
+    font-family: 'Press Start 2P', monospace !important;
+    box-shadow: 15px 15px 0px #000 !important;
+}
+.annoying-popup.theme-8bit .header {
+    background-color: #ccc !important;
+    color: #0000aa !important;
+    border: none !important;
+}
+
+#link-expiration {
+    background: #000;
+    color: #33ff00;
+    border: 2px solid #33ff00;
+    padding: 10px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    cursor: pointer;
+}
